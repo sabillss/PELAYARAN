@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Kondisi Aman Berlayar</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <div class="logo-container">
+        <img src="unair.png" alt="Logo UNAIR" class="logo unair-logo">
+        <img src="bmkgnw.png" alt="Logo BMKG" class="logo bmkg-logo">
+    </div>
+    <h1>Prediksi Kondisi Aman Berlayar</h1>
+    <form onsubmit="event.preventDefault(); prediksiKeamanan();">
+        <label for="angin">Kecepatan Angin (knot):</label>
+        <input type="number" id="angin" placeholder="Masukkan kecepatan angin" required step="0.1">
+
+        <label for="gelombang">Ketinggian Gelombang (m):</label>
+        <input type="number" id="gelombang" placeholder="Masukkan ketinggian gelombang" required step="0.01">
+        <label for="jenisKapal">Jenis Kapal:</label>
+        <select id="jenisKapal" required>
+            <option value="nelayan">Kapal Nelayan</option>
+            <option value="ferry">Kapal Ferry</option>
+        </select>
+
+        <button type="submit">Prediksi Keamanan</button>
+        <button type="button" onclick="resetForm()">Reset</button>
+
+    </form>
+    <div id="hasil"></div>
+
+    <script src="script5.js"></script>
+</body>
+</html>
