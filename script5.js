@@ -148,7 +148,7 @@ function prediksiKeamanan() {
     if (a6 == 0) {
         z6 = 100;
     } else if (a6 > 0 && a6 <= 1) {
-        z6 = 100 - (a6 * 10);
+        z6 = 100 - (a6 * 30);
     }
 
     let a7 = Math.min(anginTinggi, gelombangSangatRendah);
@@ -156,7 +156,7 @@ function prediksiKeamanan() {
     if (a7 == 0) {
         z7 = 100;
     } else if (a7 > 0 && a7 <= 1) {
-        z7 = 100 - (a7 * 10);
+        z7 = 100 - (a7 * 30);
     }
 
     let a8 = Math.min(anginSedang, gelombangSedang);
@@ -164,7 +164,7 @@ function prediksiKeamanan() {
     if (a8 == 0) {
         z8 = 100;
     } else if (a8 > 0 && a8 <= 1) {
-        z8 = 100 - (a8 * 10);
+        z8 = 100 - (a8 * 30);
     }
 
     let a9 = Math.min(anginTinggi, gelombangRendah);
@@ -172,7 +172,7 @@ function prediksiKeamanan() {
     if (a9 == 0) {
         z9 = 100;
     } else if (a9 > 0 && a9 <= 1) {
-        z9 = 100 - (a9 * 10);
+        z9 = 100 - (a9 * 30);
     }
 
     let a10 = Math.min(anginTinggi, gelombangSedang);
@@ -217,10 +217,12 @@ function prediksiKeamanan() {
 
     let a14 = Math.min(anginRendah, gelombangTinggi);
     let z14 = 0;
-    if (a14 == 0) {
+    if (a14 == 1) {
         z14 = 100;
-    } else if (a14 > 0 && a14 <= 1) {
-        z14 = 100 - (a14 * 10);
+    } else if (a14 >= 0 && a14 < 1) {
+        z14 = (a14 * 30) + 70;
+    } else if (a14 == 0) {
+        z14 = 70;
     }
 
     let a15 = Math.min(anginSangatRendah, gelombangTinggi);
@@ -228,32 +230,44 @@ function prediksiKeamanan() {
     if (a15 == 0) {
         z15 = 100;
     } else if (a15 > 0 && a15 <= 1) {
-        z15 = 100 - (a15 * 10);
+        z15 = 100 - (a15 * 30);
     }
+
     let a16 = Math.min(anginSangatRendah, gelombangTinggi);
     let z16 = 0;
     if (a16 == 0) {
         z16 = 100;
     } else if (a16 > 0 && a16 <= 1) {
-        z16 = 100 - (a16 * 10);
+        z16 = 100 - (a16 * 30);
     }
     let a17 = Math.min(anginSangatRendah, gelombangSedang);
     let z17 = 0;
     if (a17 == 0) {
         z17 = 100;
     } else if (a17 > 0 && a17 <= 1) {
-        z17 = 100 - (a17 * 10);
+        z17 = 100 - (a17 * 30);
     }
-    let totalAlpha = a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 + a10 + a11 + a12 + a13 + a14 + a15 + a16 + a17;
-    if (totalAlpha === 0) {
-        document.getElementById('hasil').innerHTML = 'Tidak ada hasil yang valid untuk perhitungan ini.';
-        return; // Menghentikan perhitungan lebih lanjut
-    }
-    let hasil = (a1 * z1 + a2 * z2 + a3 * z3 + a4 * z4 + a5 * z5 + a6 * z6 + a7 * z7 + a8 * z8 + a9 * z9 + a10 * z10 + a11 * z11 + a12 * z12 + a13 * z13 + a14 * z14 + a15 * z15 + a16 * z16 + a17 * z17) / totalAlpha;
+
+    let totalAlpha = a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 + a10 + a11 + a12 + a13 + a14 + a15 + a16 + a17 ;
+    let hasil = 0;
+
+    // Pastikan totalAlpha tidak nol sebelum melakukan pembagian
+    if (totalAlpha > 0) {
+    hasil = (a1 * z1 + a2 * z2 + a3 * z3 + a4 * z4 + a5 * z5 + 
+             a6 * z6 + a7 * z7 + a8 * z8 + a9 * z9 + a10 * z10 + 
+             a11 * z11 + a12 * z12 + a13 * z13 + a14 * z14 + a15 * z15 + a16 * z16  + a17 * z17) / totalAlpha;
+    } else {
+    hasil = 70; // Nilai default jika tidak ada aturan yang aktif
+    }  
 
     // Menambahkan perhitungan hasil panen berdasarkan hasil fuzzy sebelumnya
     let prediksi_aman = 0, prediksi_waspada = 0, prediksi_berbahaya = 0;
-    if (hasil >= 0 && hasil <= 45) {
+    if (hasil == 0){
+        prediksi_aman = 1;
+        prediksi_waspada = 0;
+        prediksi_berbahaya = 0;
+    }
+    if (hasil > 0 && hasil <= 45) {
         prediksi_aman = 1;
         prediksi_waspada = 0;
         prediksi_berbahaya = 0;
@@ -276,10 +290,16 @@ function prediksiKeamanan() {
         kesimpulan = 'Waspada Untuk Berlayar';
     } else if (prediksi_berbahaya > prediksi_aman && prediksi_berbahaya > prediksi_waspada) {
         kesimpulan = 'Berbahaya Untuk Berlayar';
+    } else if (prediksi_berbahaya >= prediksi_waspada) {
+        kesimpulan = 'Berbahaya Untuk Berlayar';
+    } else if (prediksi_waspada >= prediksi_aman) {
+        kesimpulan = 'Waspada Untuk Berlayar';
+    } else {
+        kesimpulan = 'Aman Untuk Berlayar';
     }
+
     // Menampilkan hasil prediksi dan kesimpulan
-    // Menampilkan hasil prediksi tanpa nilai hasil perhitungan
-    document.getElementById('hasil').innerHTML = `Prediksi: ${kesimpulan}`;
+    document.getElementById('hasil').innerHTML = `Prediksi: ${kesimpulan}, Hasil: ${hasil}`;
     console.log(`Angin: ${angin}, Gelombang: ${gelombang}, Hasil: ${hasil}, Kesimpulan: ${kesimpulan}`);
 }
 
@@ -289,3 +309,10 @@ function resetForm() {
     document.getElementById('jenisKapal').value = 'nelayan'; // Atur ke nilai default
     document.getElementById('hasil').innerHTML = ''; // Kosongkan hasil
 }
+
+function hitungKeanggotaan(x, batasBawah, batasAtas) {
+    if (x <= batasBawah) return 1;
+    if (x >= batasAtas) return 0;
+    return (batasAtas - x) / (batasAtas - batasBawah);
+}
+
