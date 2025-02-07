@@ -180,7 +180,7 @@ function prediksiKeamanan() {
     if (a10 == 1) {
         z10 = 100;
     } else if (a10 >= 0 && a10 < 1) {
-        z10 = (a10 * 30) - 70;
+        z10 = (a10 * 30) + 70;
     } else if (a10 == 0) {
         z10 = 70;
     }
@@ -190,7 +190,7 @@ function prediksiKeamanan() {
     if (a11 == 1) {
         z11 = 100;
     } else if (a11 >= 0 && a11 < 1) {
-        z11 = (a11 * 30) - 70;
+        z11 = (a11 * 30) + 70;
     } else if (a11 == 0) {
         z11 = 70;
     }
@@ -200,7 +200,7 @@ function prediksiKeamanan() {
     if (a12 == 1) {
         z12 = 100;
     } else if (a12 >= 0 && a12 < 1) {
-        z12 = (a12 * 30) - 70;
+        z12 = (a12 * 30) + 70;
     } else if (a12 == 0) {
         z12 = 70;
     }
